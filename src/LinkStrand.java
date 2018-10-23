@@ -1,5 +1,11 @@
 
 public class LinkStrand implements IDnaStrand {
+	
+	/*
+	 * Private inner class Node which will initialize a node object with field info 
+	 * and field next, which is a pointer to another node
+	 * @param String s which is the info included
+	 */
 	 private class Node {
 	       String info;
 	       Node next;
@@ -11,14 +17,33 @@ public class LinkStrand implements IDnaStrand {
 	   private Node myFirst,myLast;
 	   private long mySize;
 	   private int myAppends;
+	   
+		/*
+		 * Default Link Strand constructor. initializes a string object as an empty
+		 * string
+		 */
 
 		public LinkStrand(){
 			this("");
 		}
+		
+		/*
+		 * LinkStrand constructor. Calls initialize on String s to create a LinkStrand 
+		 * with the same value as the source 
+		 */
+
 
 		public LinkStrand(String s) {
 			initialize(s);
 		}
+	
+		/**
+		 * Initialize this strand so that it represents the value of source. No
+		 * error checking is performed.
+		 * 
+		 * @param source
+		 *            is the source of this enzyme
+		 */
 
 	@Override
 	public void initialize(String s) {
@@ -28,6 +53,10 @@ public class LinkStrand implements IDnaStrand {
 		mySize=0;
 	}
 
+	/**
+	 * returns new linkedList
+	 */
+	
 	@Override
 	public IDnaStrand getInstance(String s) {
 		return new LinkStrand(s);
@@ -62,10 +91,10 @@ public class LinkStrand implements IDnaStrand {
 		
 	}
 	
-
-
 	@Override
 	public IDnaStrand reverse() {
+		
+		
 		return null;
 	}
 
