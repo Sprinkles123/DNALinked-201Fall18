@@ -1,11 +1,14 @@
+import java.util.Iterator;
 
+
+/*
+
+ * Private inner class Node which will initialize a node object with field info 
+ * and field next, which is a pointer to another node
+ * @param String s which is the info included
+
+ */
 public class LinkStrand implements IDnaStrand {
-	
-	/*
-	 * Private inner class Node which will initialize a node object with field info 
-	 * and field next, which is a pointer to another node
-	 * @param String s which is the info included
-	 */
 	 private class Node {
 	       String info;
 	       Node next;
@@ -17,26 +20,20 @@ public class LinkStrand implements IDnaStrand {
 	   private Node myFirst,myLast;
 	   private long mySize;
 	   private int myAppends;
-	   
 		/*
 		 * Default Link Strand constructor. initializes a string object as an empty
 		 * string
 		 */
-
 		public LinkStrand(){
 			this("");
 		}
-		
 		/*
 		 * LinkStrand constructor. Calls initialize on String s to create a LinkStrand 
 		 * with the same value as the source 
 		 */
-
-
 		public LinkStrand(String s) {
 			initialize(s);
 		}
-	
 		/**
 		 * Initialize this strand so that it represents the value of source. No
 		 * error checking is performed.
@@ -44,19 +41,21 @@ public class LinkStrand implements IDnaStrand {
 		 * @param source
 		 *            is the source of this enzyme
 		 */
-
 	@Override
 	public void initialize(String s) {
 		myFirst = new Node(s);
 		myLast=myFirst;
 		myAppends = 0;
 		mySize=0;
+		int myIndex=0;
+		int myLocalIndex;
+		Node myCurrent;
 	}
+
 
 	/**
 	 * returns new linkedList
 	 */
-	
 	@Override
 	public IDnaStrand getInstance(String s) {
 		return new LinkStrand(s);
@@ -85,47 +84,64 @@ public class LinkStrand implements IDnaStrand {
 		StringBuilder sB= new StringBuilder();
 		Node myCurrent = myFirst;
 		while(myCurrent !=null) {
-			sB.append(myCurrent.info);
-			myCurrent=myCurrent.next;}
+		sB.append(myCurrent.info);
+		myCurrent=myCurrent.next;}
 		return sB.toString();
 		
 	}
 	
+
+
 	@Override
 	public IDnaStrand reverse() {
-		Node firstNode = this.myFirst;
-		Node lastNode = this.myLast; 
+		Node myCurrentF=myFirst;
+		Node myCurrentL=myLast;
+		Node nn=null;
 		
-		Node list = firstNode;
-		Node head = firstNode;
+		StringBuilder sB =new StringBuilder(myCurrentF.info);
+		sB.reverse();
+		LinkStrand ls = new LinkStrand(sB.toString());
+		myCurrentF=myCurrentF.next;
 		
-		String DNA = head.info;
-		StringBuilder copy = new StringBuilder(DNA);
-		copy.reverse();
-		StringStrand reverseDNA = new StringStrand(copy.toString());
-		head.info = reverseDNA;
-		break;
-			
-			
-		String DNA = head.info;
-		String reverseDNA;
-		for(int i = DNA.length() -1; i >= 0; i --) {
-			reverseDNA += reverseDNA.charAt(i);
-				
+		while(myCurrentF!=null) {
+		sB =new StringBuilder(myCurrentF.info);
+		sB.reverse();
+		ls.append(sB.toString());
+		myCurrentF=myCurrentF.next;
 		}
-		
-			
+		 nn=ls.myFirst;
+		 Node ntemp =null;
+		 Node rNode=null;
+		 ls.myFirst=ls.myLast;
+		 
+		while(nn != null) {
+			ntemp = nn.next;
+			nn.next= rNode;
+			rNode=nn;
+			ls.myFirst=rNode;
+			nn=ntemp;
+		}
 
-//		System.out.println(head);
-		
-		
-		return head;
-	}
+		return ls;}
 
 
 	@Override
 	public char charAt(int index) {
-		return 0;
+		//inefficent
+			int count = 0;
+			        int dex = 0;
+			        Node list = myFirst;
+			        while (count != index) {
+			            count++;
+			            dex++;
+			            if (dex >= list.info.length()) {
+			                dex = 0;
+			                list = list.next;
+			            }
+			        }
+			           return list.info.charAt(dex);
+			        }
+
 	}
 
 }
