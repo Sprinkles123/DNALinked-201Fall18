@@ -49,7 +49,7 @@ public class LinkStrand implements IDnaStrand {
 		myFirst = new Node(s);
 		myLast=myFirst;
 		myAppends = 0;
-		mySize=0;
+		mySize= s.length();
 		myIndex=0;
 		myLocalIndex = 0;
 		myCurrent = myFirst;
@@ -71,7 +71,7 @@ public class LinkStrand implements IDnaStrand {
 	
 	@Override
 	public long size() {
-		return size();
+		return mySize;
 		
 	}
 	/**
@@ -92,8 +92,9 @@ public class LinkStrand implements IDnaStrand {
 	 */
 	@Override
 	public IDnaStrand append(String dna) {
-		myLast=myLast.next;
-		mySize=mySize + (long) dna.length();
+		LinkStrand.Node next = new LinkStrand.Node(dna);
+		myLast.next = next;
+		mySize = mySize + (long) dna.length();
 		myAppends++;
 		return this;
 	}
@@ -114,8 +115,8 @@ public class LinkStrand implements IDnaStrand {
 	}
 	
 	/**
-	 * Reverses the order of the IDNAStrand object, and reverses the order
-	 * of the sequences inside the Nodes of the object. the result is a 
+	 * Reverses the order of the IDNAStrand object and reverses the order
+	 * of the sequences inside the Nodes of the object. The result is a 
 	 * reversed LinkedList with all of the info fields reversed.
 	 */
 
@@ -167,7 +168,7 @@ public class LinkStrand implements IDnaStrand {
 //		}
 //		return list.info.charAt(dex);
 //	}
-
+//}
 	@Override
 	public char charAt(int index) {
 		//efficient
@@ -178,7 +179,6 @@ public class LinkStrand implements IDnaStrand {
 				myCurrent = myCurrent.next;
 			}
 		}
-		myIndex = index;
 		return myCurrent.info.charAt(myLocalIndex);
 	}
 
