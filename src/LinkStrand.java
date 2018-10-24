@@ -98,17 +98,26 @@ public class LinkStrand implements IDnaStrand {
 		return this;
 	}
 	
+	/**
+	 * return the DNA sequence stored in the linked list as a string by 
+	 * iterating over the linked list in appending the info fields to a 
+	 * string builder object
+	 */
 	public String toString() {
 		StringBuilder sB= new StringBuilder();
 		Node myCurrent = myFirst;
 		while(myCurrent !=null) {
-		sB.append(myCurrent.info);
-		myCurrent=myCurrent.next;}
+			sB.append(myCurrent.info);
+			myCurrent=myCurrent.next;
+		}
 		return sB.toString();
-		
 	}
 	
-
+	/**
+	 * Reverses the order of the IDNAStrand object, and reverses the order
+	 * of the sequences inside the Nodes of the object. the result is a 
+	 * reversed LinkedList with all of the info fields reversed.
+	 */
 
 	@Override
 	public IDnaStrand reverse() {
@@ -122,15 +131,15 @@ public class LinkStrand implements IDnaStrand {
 		myCurrentF=myCurrentF.next;
 		
 		while(myCurrentF!=null) {
-		sB =new StringBuilder(myCurrentF.info);
-		sB.reverse();
-		ls.append(sB.toString());
-		myCurrentF=myCurrentF.next;
+			sB =new StringBuilder(myCurrentF.info);
+			sB.reverse();
+			ls.append(sB.toString());
+			myCurrentF=myCurrentF.next;
 		}
-		 nn=ls.myFirst;
-		 Node ntemp =null;
-		 Node rNode=null;
-		 ls.myFirst=ls.myLast;
+		nn=ls.myFirst;
+		Node ntemp =null;
+		Node rNode=null;
+		ls.myFirst=ls.myLast;
 		 
 		while(nn != null) {
 			ntemp = nn.next;
@@ -139,8 +148,8 @@ public class LinkStrand implements IDnaStrand {
 			ls.myFirst=rNode;
 			nn=ntemp;
 		}
-
-		return ls;}
+		return ls;
+	}
 
 
 //	@Override
@@ -171,7 +180,7 @@ public class LinkStrand implements IDnaStrand {
 		}
 		myIndex = index;
 		return myCurrent.info.charAt(myLocalIndex);
-		}
+	}
 
 }
 
