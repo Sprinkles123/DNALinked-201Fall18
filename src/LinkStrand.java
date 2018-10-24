@@ -20,6 +20,9 @@ public class LinkStrand implements IDnaStrand {
 	   private Node myFirst,myLast;
 	   private long mySize;
 	   private int myAppends;
+	   private int myIndex;
+	   private Node myCurrent;
+	   private int myLocalIndex;
 		/*
 		 * Default Link Strand constructor. initializes a string object as an empty
 		 * string
@@ -47,31 +50,46 @@ public class LinkStrand implements IDnaStrand {
 		myLast=myFirst;
 		myAppends = 0;
 		mySize=0;
-		int myIndex=0;
-		int myLocalIndex;
-		Node myCurrent;
+		myIndex=0;
+		myLocalIndex = 0;
+		myCurrent = myFirst;
 	}
 
 
 	/**
-	 * returns new linkedList
+	 * returns new IDNAStrand which has as info string s;
+	 * @Param: DNA String s which is a DNA sequence
 	 */
 	@Override
 	public IDnaStrand getInstance(String s) {
 		return new LinkStrand(s);
 	}
 
+	/**
+	 * @return the number of base pairs in this strand;
+	 */
+	
 	@Override
 	public long size() {
 		return size();
 		
 	}
+	/**
+	 * @return the number of times the IDNAStrand object has been appended to
+	 */
 	
 	@Override
 	public int getAppendCount() {
 		return myAppends;
 	}
 
+	/**
+	 * Append a strand of dna data to this strand. No error checking is
+	 * done. This method is efficient; it uses a StringBuilder or a
+	 * StringBuffer.
+	 * 
+	 * @param dna is the String appended to this strand
+	 */
 	@Override
 	public IDnaStrand append(String dna) {
 		myLast=myLast.next;
@@ -125,23 +143,36 @@ public class LinkStrand implements IDnaStrand {
 		return ls;}
 
 
+//	@Override
+//	public int charAt(int index) {
+//		int count = 0;
+//		int dex = 0;
+//		Node list = myFirst;
+//		while (count != index) {
+//			count++;
+//			dex++;
+//			if (dex >= list.info.length()) {
+//						dex = 0;
+//						list = list.next;
+//			}
+//		}
+//		return list.info.charAt(dex);
+//	}
+
 	@Override
 	public char charAt(int index) {
-		//inefficent
-			int count = 0;
-			        int dex = 0;
-			        Node list = myFirst;
-			        while (count != index) {
-			            count++;
-			            dex++;
-			            if (dex >= list.info.length()) {
-			                dex = 0;
-			                list = list.next;
-			            }
-			        }
-			           return list.info.charAt(dex);
-			        }
-
-	}
+		//efficient
+		while (myLocalIndex != index) {
+			myLocalIndex++;
+			if (myLocalIndex >= myCurrent.info.length()) {
+				myLocalIndex = 0;
+				myCurrent = myCurrent.next;
+			}
+		}
+		myIndex = index;
+		return myCurrent.info.charAt(myLocalIndex);
+		}
 
 }
+
+
