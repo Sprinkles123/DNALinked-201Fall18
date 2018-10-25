@@ -90,8 +90,8 @@ public class LinkStrand implements IDnaStrand {
 	@Override
 	public IDnaStrand append(String dna) {
 		Node next = new Node(dna);
-		myLast = next;
-		
+		myLast.next = next;
+		myLast = myLast.next;
 		mySize += (long) dna.length();
 		myAppends++;
 		return this;
@@ -151,51 +151,27 @@ public class LinkStrand implements IDnaStrand {
 
 	@Override
 	public char charAt(int index) {
-<<<<<<< HEAD
+
 		//efficient
-		if (index <= myIndex) {
+		if (index < myIndex) {
 			myLocalIndex = 0; 
 			myIndex = 0;
 			myCurrent = myFirst;
 		}
-		if(myIndex == index) {
-			
-		}
-		
-		if(index > mySize) {
-			throw new RuntimeException("error: index out of bounds");
+
+		if(index > this.size() - 1 ) {
+			throw new IndexOutOfBoundsException("error: index out of bounds");
 		}
 		while (myIndex != index) {
 			myLocalIndex++;
 			myIndex++;
-			System.out.println(myLocalIndex);
-			System.out.println(myCurrent.info.length());
-			System.out.println(myIndex);
-			
+	
 			if (myLocalIndex >= myCurrent.info.length()) {
-				if (myCurrent.next == null) {
-					throw new RuntimeException("error: myCurrent is Null");
-				}
 				myLocalIndex = 0;
 				myCurrent = myCurrent.next;
-				System.out.println("kyle");
-				
-=======
-		
-		LinkStrand dna = new LinkStrand(".....");
-		Iterator<Character> iter= dna.iterator();
-		while (iter.hasNext()) {
-			myLocalIndex++;
-			myIndex++;
-			if (myCurrent.next !=null && myLocalIndex >= myCurrent.info.length()) {
-				myLocalIndex = 0;
-				myCurrent = myCurrent.next;
-				 System.out.print(iter.next());
->>>>>>> b236a61d0eb1ca88bebaee5e6f7b32ea583e3705
 			}
-			
 		}
-		System.out.println();
+		myIndex = index;
 		return myCurrent.info.charAt(myLocalIndex);
 	}
 }
