@@ -2,11 +2,9 @@ import java.util.Iterator;
 
 
 /*
-
  * Private inner class Node which will initialize a node object with field info 
  * and field next, which is a pointer to another node
  * @param String s which is the info included
-
  */
 public class LinkStrand implements IDnaStrand {
 	 private class Node {
@@ -23,6 +21,7 @@ public class LinkStrand implements IDnaStrand {
 	   private int myIndex;
 	   private Node myCurrent;
 	   private int myLocalIndex;
+	   
 		/*
 		 * Default Link Strand constructor. initializes a string object as an empty
 		 * string
@@ -30,6 +29,7 @@ public class LinkStrand implements IDnaStrand {
 		public LinkStrand(){
 			this("");
 		}
+		
 		/*
 		 * LinkStrand constructor. Calls initialize on String s to create a LinkStrand 
 		 * with the same value as the source 
@@ -37,12 +37,11 @@ public class LinkStrand implements IDnaStrand {
 		public LinkStrand(String s) {
 			initialize(s);
 		}
+		
 		/**
 		 * Initialize this strand so that it represents the value of source. No
-		 * error checking is performed.
-		 * 
-		 * @param source
-		 *            is the source of this enzyme
+		 * error checking is performed. 
+		 * @param s is the source of this enzyme
 		 */
 	@Override
 	public void initialize(String s) {
@@ -68,16 +67,14 @@ public class LinkStrand implements IDnaStrand {
 	/**
 	 * @return the number of base pairs in this strand;
 	 */
-	
 	@Override
 	public long size() {
-		return mySize;
-		
+		return mySize;		
 	}
+	
 	/**
 	 * @return the number of times the IDNAStrand object has been appended to
 	 */
-	
 	@Override
 	public int getAppendCount() {
 		return myAppends;
@@ -120,7 +117,6 @@ public class LinkStrand implements IDnaStrand {
 	 * of the sequences inside the Nodes of the object. The result is a 
 	 * reversed LinkedList with all of the info fields reversed.
 	 */
-
 	@Override
 	public IDnaStrand reverse() {
 		Node myCurrentF=myFirst;
@@ -153,25 +149,9 @@ public class LinkStrand implements IDnaStrand {
 		return ls;
 	}
 
-
-//	@Override
-//	public int charAt(int index) {
-//		int count = 0;
-//		int dex = 0;
-//		Node list = myFirst;
-//		while (count != index) {
-//			count++;
-//			dex++;
-//			if (dex >= list.info.length()) {
-//						dex = 0;
-//						list = list.next;
-//			}
-//		}
-//		return list.info.charAt(dex);
-//	}
-//}
 	@Override
 	public char charAt(int index) {
+<<<<<<< HEAD
 		//efficient
 		if (index <= myIndex) {
 			myLocalIndex = 0; 
@@ -200,12 +180,22 @@ public class LinkStrand implements IDnaStrand {
 				myCurrent = myCurrent.next;
 				System.out.println("kyle");
 				
+=======
+		
+		LinkStrand dna = new LinkStrand(".....");
+		Iterator<Character> iter= dna.iterator();
+		while (iter.hasNext()) {
+			myLocalIndex++;
+			myIndex++;
+			if (myCurrent.next !=null && myLocalIndex >= myCurrent.info.length()) {
+				myLocalIndex = 0;
+				myCurrent = myCurrent.next;
+				 System.out.print(iter.next());
+>>>>>>> b236a61d0eb1ca88bebaee5e6f7b32ea583e3705
 			}
 			
 		}
+		System.out.println();
 		return myCurrent.info.charAt(myLocalIndex);
 	}
-
 }
-
-
