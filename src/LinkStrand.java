@@ -47,10 +47,10 @@ public class LinkStrand implements IDnaStrand {
 	@Override
 	public void initialize(String s) {
 		myFirst = new Node(s);
-		myLast=myFirst;
+		myLast = myFirst;
 		myAppends = 0;
-		mySize= s.length();
-		myIndex=0;
+		mySize = s.length();
+		myIndex = 0;
 		myLocalIndex = 0;
 		myCurrent = myFirst;
 	}
@@ -92,9 +92,10 @@ public class LinkStrand implements IDnaStrand {
 	 */
 	@Override
 	public IDnaStrand append(String dna) {
-		LinkStrand.Node next = new LinkStrand.Node(dna);
-		myLast.next = next;
-		mySize = mySize + (long) dna.length();
+		Node next = new Node(dna);
+		myLast = next;
+		
+		mySize += (long) dna.length();
 		myAppends++;
 		return this;
 	}
@@ -106,10 +107,10 @@ public class LinkStrand implements IDnaStrand {
 	 */
 	public String toString() {
 		StringBuilder sB= new StringBuilder();
-		Node myCurrent = myFirst;
-		while(myCurrent !=null) {
-			sB.append(myCurrent.info);
-			myCurrent=myCurrent.next;
+		Node myCurrenttoString = myFirst;
+		while(myCurrenttoString !=null) {
+			sB.append(myCurrenttoString.info);
+			myCurrenttoString=myCurrenttoString.next;
 		}
 		return sB.toString();
 	}
@@ -172,12 +173,35 @@ public class LinkStrand implements IDnaStrand {
 	@Override
 	public char charAt(int index) {
 		//efficient
-		while (myLocalIndex != index) {
+		if (index <= myIndex) {
+			myLocalIndex = 0; 
+			myIndex = 0;
+			myCurrent = myFirst;
+		}
+		if(myIndex == index) {
+			
+		}
+		
+		if(index > mySize) {
+			throw new RuntimeException("error: index out of bounds");
+		}
+		while (myIndex != index) {
 			myLocalIndex++;
+			myIndex++;
+			System.out.println(myLocalIndex);
+			System.out.println(myCurrent.info.length());
+			System.out.println(myIndex);
+			
 			if (myLocalIndex >= myCurrent.info.length()) {
+				if (myCurrent.next == null) {
+					throw new RuntimeException("error: myCurrent is Null");
+				}
 				myLocalIndex = 0;
 				myCurrent = myCurrent.next;
+				System.out.println("kyle");
+				
 			}
+			
 		}
 		return myCurrent.info.charAt(myLocalIndex);
 	}
