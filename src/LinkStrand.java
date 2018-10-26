@@ -148,6 +148,13 @@ public class LinkStrand implements IDnaStrand {
 		}
 		return ls;
 	}
+	/**
+	 * Returns the character at the index passed to the function. The index will 
+	 * be the global in index of the sequence rather than the  local inex at each
+	 * node.
+	 * 
+	 */
+	
 
 	@Override
 	public char charAt(int index) {
