@@ -7,3 +7,14 @@ Questions here will come from the assignment
 writeup. Be sure to copy paste questions and 
 your explanations before you push to GitHub and
 do that before uploading to Gradescope
+
+
+Question 1: are the benchmark timings for StringStrand consistent with the explanation below that the time to execute cutAndSplice is O(b2S)? 
+
+Note that the value of b is half the number of calls to append since each cut (except the first) is modeled by two calls of append in the method cutAndSplice -- see the code. This means that b2 will be constant in the benchmark, but S will vary. 
+
+Question 2: are the benchmark timings for StringBuilderStrand consistent with the explanation below that the time to execute cutAndSplice is O(bS)? 
+
+Note that the value of b is half the number of calls to append since each cut (except the first) is modeled by two calls of append in the method cutAndSplice -- see the code. This means that b will be constant in the benchmark, but S will vary. 
+
+Question 3: Explain why the time for LinkStrand does not change much at all over all the runs in the benchmark program. Explain why you think memory is exhausted at the specific strand size you see in your timings -- as compared to exhaustion for String and StringBuilder.

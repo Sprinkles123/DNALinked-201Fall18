@@ -165,8 +165,9 @@ public class LinkStrand implements IDnaStrand {
 			myIndex = 0;
 			myCurrent = myFirst;
 		}
-
-		if(index > this.size() - 1 ) {
+		
+		
+		if(index > this.size() - 1) {
 			throw new IndexOutOfBoundsException("error: index out of bounds");
 		}
 		while (myIndex != index) {
@@ -176,6 +177,9 @@ public class LinkStrand implements IDnaStrand {
 			if (myLocalIndex >= myCurrent.info.length()) {
 				myLocalIndex = 0;
 				myCurrent = myCurrent.next;
+			}
+			if (myCurrent == null) {
+				throw new IndexOutOfBoundsException("error: index out of bounds");
 			}
 		}
 		myIndex = index;
