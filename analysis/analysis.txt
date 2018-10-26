@@ -12,7 +12,13 @@ Question 1: are the benchmark timings for StringStrand consistent with the expla
 below that the time to execute cutAndSplice is O((b^2)S)? 
 
 Yes, the benchmark timing for StringStrand consistent with the explanation 
-below that the time to execute cutAndSplice is O((b^2)S). As
+below that the time to execute cutAndSplice is O((b^2)S). We can see that 
+when b is held constant, as is the case in cut and splice, the time complexity
+increases linearly with the size of splicee (which is increasing be a factor of
+2^N). so the running time analysis is consistent with an O((b^2)S) time complexity, 
+because when b is held constant we would expect the run time to depend exclusively
+on s => O(S). this is reflected in the benchmark run below.
+
 
 dna length = 4,639,221
 cutting at enzyme gaattc
@@ -44,12 +50,20 @@ Question 2: are the benchmark timings for StringBuilderStrand consistent with th
 below that the time to execute cutAndSplice is O(bS)? 
 
 Yes, the benchmark timings for StringBuilderStrand consistent with the explanation 
-below that the time to execute cutAndSplice is O(bS).
+below that the time to execute cutAndSplice is O(bS). This is for a similar reason
+as part Question 1. Because b is held constant in the benchmark, we can see that 
+the time complexity increases linearly with the size of splicee (which increases
+by a factor of 2^n for every run. we can really only see this relationship develop
+in the runs with a sufficiently large size of splicee, I guessing because java is 
+gaining some sort of efficiency through its VM that is hiding the relationship. Either way 
+we can see starting at 8,192 splices that the time increases by a factor of 2^n, so 
+it scales linearly with S. therefore the runtime when b is held constant would be 
+O(S), which is consistent with an overall time complexity of O(bS).
 
 dna length = 4,639,221
 cutting at enzyme gaattc
 -----
-Class	                splicee	      recomb	time	appends
+Class	               			 splicee	  recomb	time	appends
 -----
 StringBuilderStrand:	            256	      4,800,471	0.035	1290
 StringBuilderStrand:	            512	      4,965,591	0.025	1290
@@ -75,19 +89,29 @@ Exception in thread "main" java.lang.OutOfMemoryError: Java heap space
 
 
 
-Question 3: Explain why the time for LinkStrand does not change much at all over all the runs in the benchmark program.
- Explain why you think memory is exhausted at the specific strand size you see in your timings 
- -- as compared to exhaustion for String and StringBuilder.
+Question 3: Explain why the time for LinkStrand does not change much at all over all the runs in the
+benchmark program. Explain why you think memory is exhausted at the specific strand size you see in 
+your timings -- as compared to exhaustion for String and StringBuilder.
 
-The time for LinkStrand does not change much at all over all the runs in the benchmark program because LinkStrand is a linked list which has O(N) for adding strands.
-Memory is exhausted at the specific strand size seen in LinkStand which is greater than the exhaustion 
-for String and StringBuilder because LinkStrand creates one new strand and appends segments to the new strand while
-the other two classes are creating a new strand and copying the old each time a new segment is to be added.
+The time for LinkStrand does not change much at all over all the runs in the benchmark program because LinkStrand
+is a linked list which can add a node. Therefore its time complexity is not dependent on the size of splicee, and we
+see that it is able to cut and splice in constant time (in the benchmark conditions. Memory is exhausted at the 
+specific strand size seen in LinkStand which is greater than the exhaustion for String and StringBuilder because 
+LinkStrand creates one new strand and appends segments to the new strand while the other two classes are creating 
+a new strand and copying the old each time a new segment is to be added. LinkStrand gains a space complexity advantage
+over the other algorithms because it does not need to make a new stringbbuilder object every time it cuts and splices,
+rather it simply makes the spliced nodes point to a single stingbuilder object, which will be used to replace all of the 
+appropriate sequences. LinkStrand will use constant space to store the Splicee, while String and StringBuilder will use
+O(Splice(N)) space where N is the number of splices. Therefore it makes sense that LinkStrand is able to process sequences
+that are much larger. The specific number that it stops at is indicative of the fact that the heap is indivative of the fact
+that the String and StringBuilder must take up 1000 times as much memory at that point.
+
+O(N) space complexity while the other algorithnms function in O(N^2) space complexity.
 
  dna length = 4,639,221
 cutting at enzyme gaattc
 -----
-Class	                splicee	      recomb	time	appends
+Class	                splicee	  recomb	time	appends
 -----
 LinkStrand:	            256	      4,800,471	0.038	1290
 LinkStrand:	            512	      4,965,591	0.027	1290
